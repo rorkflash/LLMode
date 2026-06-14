@@ -48,6 +48,16 @@ def default_config_file() -> Path:
     return default_data_dir() / "config.yaml"
 
 
+def default_env_file() -> Path:
+    """Absolute path to the ``.env`` file at the repo root.
+
+    Resolved relative to this source file so it works regardless of the
+    working directory the daemon or CLI is launched from.  The file may not
+    exist (first run, CI, etc.) — callers should check ``.exists()`` if needed.
+    """
+    return Path(__file__).resolve().parent.parent.parent / ".env"
+
+
 def default_ui_dir() -> Path | None:
     """Locate the ``ui/`` React app relative to this package installation.
 

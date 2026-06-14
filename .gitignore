@@ -221,3 +221,11 @@ __marimo__/
 ui/node_modules/
 ui/dist/
 ui/tsconfig.tsbuildinfo
+
+# ui/ — local env overrides (contain secrets, never commit)
+ui/.env.local
+ui/.env.*.local
+
+# daemon — local env overrides
+.env
+.env.local

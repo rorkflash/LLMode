@@ -97,11 +97,21 @@ def _load_yaml(config_file: Path) -> dict:
 def get_settings() -> Settings:
     """Build (once) and return the process-wide settings singleton.
 
-    YAML values seed the model; environment variables still override them
-    because pydantic-settings reads env after explicit kwargs are validated.
+    Priority order (highest wins):
+      1. Real environment variables (``LLMODE_*`` in the shell).
+      2. ``.env`` file at the repo root (loaded by pydantic-settings).
+      3. YAML config file values.
+      4. Field defaults defined in :class:`Settings`.
+
+    The ``.env`` path is resolved to an absolute path so it is found
+    regardless of the working directory the process was launched from.
     """
     yaml_data = _load_yaml(paths.default_config_file())
-    settings = Settings(**yaml_data)
+    env_file = paths.default_env_file()
+    # _env_file is a pydantic-settings v2 constructor override: it tells the
+    # settings loader which .env file to read, taking precedence over any
+    # env_file set in model_config and resolving to an absolute path.
+    settings = Settings(_env_file=env_file, **yaml_data)
     # Make sure the directories we depend on exist before anyone uses them.
     paths.ensure_dirs(settings.data_dir, settings.models_dir)
     return settings
