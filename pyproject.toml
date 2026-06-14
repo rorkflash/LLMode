@@ -1,0 +1,58 @@
+# ---------------------------------------------------------------------------
+# pyproject.toml — packaging + dependency manifest for the LLMode backend.
+#
+# This file describes ONLY the Python side of the project (the headless daemon
+# `llmoded` and the `llmode` CLI). The React UI lives in ../llmode-ui and has
+# its own package.json — the two halves are deliberately independent services.
+# ---------------------------------------------------------------------------
+
+[build-system]
+# Use Hatchling as the build backend — small, modern, zero-config for src layouts.
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "llmode"
+version = "0.1.0"
+description = "Single-host control plane to discover, run, and monitor local LLMs."
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+
+# Runtime dependencies. We keep the *core* light: heavy ML libraries live inside
+# the wrapped backend runners (llama.cpp / mlx / vLLM), not in this process.
+dependencies = [
+    "fastapi>=0.111",        # HTTP framework for the daemon (async).
+    "uvicorn[standard]>=0.30", # ASGI server that runs the FastAPI app.
+    "pydantic>=2.7",         # Domain models + validation.
+    "pydantic-settings>=2.3", # Layered config (file + env) loading.
+    "httpx>=0.27",           # Async HTTP client: CLI->daemon and proxy->backends.
+    "psutil>=5.9",           # Cross-platform CPU / RAM / process metrics.
+    "typer>=0.12",           # Declarative CLI framework.
+    "pyyaml>=6.0",           # Read/write the YAML config file.
+    "huggingface-hub>=0.23", # Catalog search + model downloads.
+]
+
+[project.optional-dependencies]
+# Developer tooling — installed with `pip install -e ".[dev]"`.
+dev = [
+    "ruff>=0.5",     # Linter + formatter.
+    "pytest>=8.0",   # Test runner.
+    "pytest-asyncio>=0.23", # Async test support.
+]
+
+[project.scripts]
+# Console entry points created on install:
+#   `llmode`  -> the Typer CLI (talks to the daemon over HTTP).
+#   `llmoded` -> launches the FastAPI daemon directly.
+llmode = "llmode.cli.app:main"
+llmoded = "llmode.daemon.app:main"
+
+[tool.hatch.build.targets.wheel]
+# Tell Hatchling where the importable package lives.
+packages = ["llmode"]
+
+[tool.ruff]
+# Match the project's minimum Python and keep lines readable.
+target-version = "py312"
+line-length = 100

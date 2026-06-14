@@ -1,0 +1,28 @@
+{
+  "//": "Package manifest for the LLMode Web UI — a standalone React + Vite app.",
+  "//runtime": "This is a SEPARATE service from the Python daemon; it talks to it over HTTP/WS using VITE_LLMODE_API. Run it only when you want the dashboard.",
+  "name": "llmode-ui",
+  "//location": "Sits inside the llmode repo at ui/ — one repo, two services.",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "//dev": "Start the Vite dev server with hot-reload (default http://localhost:5173).",
+    "dev": "vite",
+    "//build": "Produce an optimized static bundle in dist/ (optionally served by the daemon later).",
+    "build": "tsc -b && vite build",
+    "//preview": "Serve the built bundle locally to sanity-check a production build.",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "typescript": "^5.5.3",
+    "vite": "^5.3.4"
+  }
+}

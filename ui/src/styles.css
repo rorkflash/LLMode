@@ -1,0 +1,201 @@
+/* ---------------------------------------------------------------------------
+   Global styles for the LLMode UI.
+   A compact dark theme — no CSS framework, just a few utility classes used by
+   the components/pages. Kept small and self-contained.
+   --------------------------------------------------------------------------- */
+
+:root {
+  /* Theme tokens referenced throughout the stylesheet. */
+  --bg: #0f1115;
+  --panel: #1a1d24;
+  --border: #2a2f3a;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --accent: #22c55e;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-size: 14px;
+}
+
+/* App layout: header on top, scrollable content below. */
+.app {
+  min-height: 100vh;
+}
+.header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+.brand {
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--accent);
+}
+.nav {
+  display: flex;
+  gap: 8px;
+}
+.content {
+  padding: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Tab buttons in the header nav. */
+.tab {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.tab.active {
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* Generic page container + headings. */
+.page h2 {
+  margin-top: 0;
+}
+
+/* Card / grid primitives. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+/* Stat tiles on the dashboard. */
+.stat-label {
+  color: var(--muted);
+  font-size: 12px;
+  text-transform: uppercase;
+}
+.stat-value {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 4px 0;
+}
+.stat-sub {
+  color: var(--muted);
+}
+
+/* Layout helpers. */
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.muted {
+  color: var(--muted);
+  font-size: 12px;
+}
+.error {
+  color: #ef4444;
+  margin-top: 8px;
+  font-size: 12px;
+}
+
+/* Inputs + buttons. */
+.input {
+  flex: 1;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+.btn {
+  background: var(--accent);
+  color: #052e16;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn.small {
+  padding: 4px 10px;
+  font-size: 12px;
+}
+.btn.ghost {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* Tables. */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+}
+.table th,
+.table td {
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+}
+.table th {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* Status indicators. */
+.badge {
+  color: #052e16;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  margin-right: 6px;
+}
+
+/* Log viewer block. */
+.logs {
+  background: #0a0c10;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 12px;
+  max-height: 240px;
+  overflow: auto;
+  font-size: 12px;
+  white-space: pre-wrap;
+}
+.sparkline {
+  display: block;
+  margin-top: 8px;
+}
